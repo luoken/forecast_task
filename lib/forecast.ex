@@ -1,18 +1,21 @@
 defmodule Forecast do
   def get_weather(arg) do
-    arg
-    |> get_list_of_weather()
+    [city, state] = get_city_state(arg)
+
+    get_list_of_weather(city, state)
     |> get_date_temp()
   end
 
-  defp get_list_of_weather(arg) do
-    [city, state] =
-      List.to_string(arg)
-      |> String.split(",")
+  defp get_city_state(arg) do
+    arg
+    |> List.to_string()
+    |> String.split(",")
+  end
 
+  defp get_list_of_weather(city, state) do
     response =
       HTTPoison.get!(
-        "api.openweathermap.org/data/2.5/forecast?q=#{city},#{state}&appid=#{
+        "https://api.openweathermap.org/data/2.5/forecast?q=#{city},#{state}&appid=#{
           System.get_env("OPEN_WEATHER_API")
         }&units=imperial"
       )
