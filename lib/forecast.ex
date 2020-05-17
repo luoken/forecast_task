@@ -1,21 +1,13 @@
 defmodule Forecast do
   def get_weather(arg) do
-    [city, state] = get_city_state(arg)
-
-    get_list_of_weather(city, state)
+    get_list_of_weather(arg)
     |> get_date_temp()
   end
 
-  defp get_city_state(arg) do
-    arg
-    |> List.to_string()
-    |> String.split(",")
-  end
-
-  defp get_list_of_weather(city, state) do
+  defp get_list_of_weather(city_state) do
     response =
       HTTPoison.get!(
-        "https://api.weatherbit.io/v2.0/forecast/daily?city=#{city},#{state}&key=#{
+        "https://api.weatherbit.io/v2.0/forecast/daily?city=#{city_state}&country=US&key=#{
           System.get_env("WEATHERBIT_API")
         }&units=I&days=5"
       )

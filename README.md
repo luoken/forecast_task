@@ -6,7 +6,7 @@ This task uses weatherbit.io as an api.
 
 Sign up for api [here](https://www.weatherbit.io/) and stick it inside your bash profile as `WEATHERBIT_API`
 
-By default, the settings have been set to show Fahrenheit and shows only 5 days.
+By default, the settings have been set to show Fahrenheit and shows only 5 days. It is also currently set to US only cities and states.
 
 ## Installation
 
