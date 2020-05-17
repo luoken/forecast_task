@@ -2,7 +2,11 @@
 
 A simple example showing phoenix's mix task. Input should be as follows: `mix forcast Pasadena,CA`
 
-Sign up for api [here](https://openweathermap.org/api) and stick it inside your bash profile as `OPEN_WEATHER_API`
+This task uses weatherbit.io as an api.
+
+Sign up for api [here](https://www.weatherbit.io/) and stick it inside your bash profile as `WEATHERBIT_API`
+
+By default, the settings have been set to show Fahrenheit and shows only 5 days.
 
 ## Installation
 

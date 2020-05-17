@@ -15,19 +15,18 @@ defmodule Forecast do
   defp get_list_of_weather(city, state) do
     response =
       HTTPoison.get!(
-        "https://api.openweathermap.org/data/2.5/forecast?q=#{city},#{state}&appid=#{
-          System.get_env("OPEN_WEATHER_API")
-        }&units=imperial"
+        "https://api.weatherbit.io/v2.0/forecast/daily?city=#{city},#{state}&key=#{
+          System.get_env("WEATHERBIT_API")
+        }&units=I&days=5"
       )
 
-    {:ok, %{"list" => list_of_temps}} = Jason.decode(response.body)
-
-    Enum.filter(list_of_temps, fn temp -> Regex.match?(~r/\s12/, temp["dt_txt"]) == true end)
+    {:ok, %{"data" => data}} = Jason.decode(response.body)
+    data
   end
 
   defp get_date_temp(list) do
     Enum.map(list, fn day ->
-      %{date: List.first(String.split(day["dt_txt"])), temp: day["main"]["temp"]}
+      %{date: day["datetime"], temp: day["temp"]}
     end)
     |> Enum.each(fn day -> IO.inspect(day) end)
   end
