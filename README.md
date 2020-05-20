@@ -1,6 +1,6 @@
 # Forecast
 
-A mix task showing a 5 day forecast for a city and state in the US. The output is displayed in fahrenheit.
+A mix task showing a 5 day forecast for a city and state in the US. The output will be displayed in fahrenheit.
 
 This task uses weatherbit.io as an api.
 
@@ -18,7 +18,7 @@ When a valid city and state has been passed in, it will return the following.
   2020-05-22 with a temperature of 60.9 degrees
 ```
 
-When querying cities that have spaces in-between or hyphens, we can run as such and will yield the same results
+When querying cities that contain spaces in-between or hyphens, we can run the commands as such and they will yield the same results
 ```
 > mix forecast Los-Angeles,CA
 
@@ -26,13 +26,13 @@ When querying cities that have spaces in-between or hyphens, we can run as such 
 
 ```
 
-When no parameters has been passed in, it will return
+When no parameters are passed in, it will return
 ```
 > mix forecast
   No city or state has been supplied
 ```
 
-And when an invalid city or state has been passed in, it will return
+When an invalid city or state has been passed in, it will return
 ```
 > mix forecast donkeykong,island
   Invalid city or state has been supplied
