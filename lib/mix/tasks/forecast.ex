@@ -14,17 +14,18 @@ defmodule Mix.Tasks.Forecast do
     `mix forecast donkeyking,island` will return an error stating invalid city or state has been supplied  
   """
 
+  @spec run(arg :: list(binary)) :: {:ok, list(map)} | {:error, binary}
   def run(arg) do
     Application.ensure_all_started(:httpoison)
 
     case Forecast.get_weather(arg) do
-      {:ok, map} ->
-        Enum.each(map, fn day ->
+      {:ok, list_of_dates} ->
+        Enum.each(list_of_dates, fn day ->
           IO.puts("#{day["datetime"]} with a temperature of #{day["temp"]} degrees")
         end)
 
       {:error, error} ->
-        raise(error)
+        Mix.shell().error(error)
     end
   end
 end
