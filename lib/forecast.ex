@@ -2,6 +2,7 @@ defmodule Forecast do
   @spec get_weather(arg :: String.t()) :: {:ok, list(map)} | {:error, String.t()}
   def get_weather(arg) do
     api_link_builder(arg)
+    |> HTTPoison.get()
     |> get_weather_data()
   end
 
@@ -12,11 +13,9 @@ defmodule Forecast do
     }&units=I&days=5"
   end
 
-  @spec get_weather_data(api_link :: String.t()) :: {:ok, list(map)} | {:error, String.t()}
-  defp get_weather_data(api_link) do
-    payload = HTTPoison.get!(api_link)
-
-    case Jason.decode(payload.body) do
+  @spec get_weather_data({:ok, map}) :: {:ok, list(map)} | {:error, String.t()}
+  defp get_weather_data({:ok, %{body: body}}) do
+    case Jason.decode(body) do
       {:ok, %{"data" => data}} ->
         {:ok, data}
 
@@ -29,5 +28,10 @@ defmodule Forecast do
       {:error, _error} ->
         {:error, "Invalid city or state has been supplied"}
     end
+  end
+
+  @spec get_weather_data({:error, map}) :: {:error, String.t()}
+  defp get_weather_data({:error, _}) do
+    {:error, "Error contacting API"}
   end
 end
